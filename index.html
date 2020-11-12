@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>treetab.club</title>
+        <title>tabtree.club</title>
         <meta charset="utf-8">
         <meta content="IE=edge" http-equiv="X-UA-Compatible">
         <meta content="width=device-width, height=device-height, initial-scale=1" name="viewport">
+
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="tt.css">
     </head>
     <body>
-        <input type="text" id="title" value="treetab.club" />
+        <div class="tt-container">
+            <div class="tt-content">
+                <h1 class="tt-head">tabtree.club</h1>
+
+                <div class="pure-form">
+                    <input class="pure-input-1" type="text" id="title"
+                           placeholder="Name your tab tree here." />
+                </div>
+            </div>
+        </div>
 
         <script>
             document.getElementById('title').onkeyup = function() {
