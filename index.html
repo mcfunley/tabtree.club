@@ -9,6 +9,10 @@
         <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
               crossorigin="anonymous">
         <link rel="stylesheet" href="tt.css">
+
+        <link id="favicon" rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😎</text></svg>">
+
+        <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
     </head>
     <body>
         <div class="tt-container">
@@ -18,6 +22,8 @@
                 <div class="pure-form">
                     <input class="pure-input-1" type="text" id="title"
                            placeholder="Name your tab tree here." />
+
+                    <emoji-picker id="emoji"></emoji-picker>
                 </div>
             </div>
         </div>
@@ -26,6 +32,10 @@
             document.getElementById('title').onkeyup = function() {
                 document.title = this.value;
             };
+
+            document.getElementById('emoji').addEventListener('emoji-click', function(e) {
+                document.getElementById('favicon').href = "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>" + e.detail.unicode + "</text></svg>";
+            });
         </script>
     </body>
 </html>
