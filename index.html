@@ -15,25 +15,38 @@
         <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
     </head>
     <body>
-        <div class="tt-container">
-            <div class="tt-content">
-                <h1 class="tt-head">tabtree.club</h1>
+        <header>
+            <h1 class="tt-head">tabtree.club</h1>
+        </header>
 
-                <div class="pure-form">
-                    <input class="pure-input-1" type="text" id="title"
-                           placeholder="Name your tab tree here." />
+        <main>
+            <div class="pure-form">
+                <input class="pure-input-1" type="text" id="title"
+                       placeholder="Name your tab tree here." />
 
-                    <emoji-picker id="emoji"></emoji-picker>
-                </div>
+                <emoji-picker id="emoji"></emoji-picker>
             </div>
-        </div>
+        </main>
 
         <script>
-            document.getElementById('title').onkeyup = function() {
+            var emoji = document.getElementById('emoji');
+            var title = document.getElementById('title');
+
+            window.addEventListener('load', function() {
+                emoji.shadowRoot.getElementById('search').placeholder = 'Choose an emoji for your tab tree here.';
+            });
+
+            if(title.value && title.value.length > 0) {
+                document.title = title.value;
+            } else {
+                title.focus();
+            }
+
+            title.onkeyup = function() {
                 document.title = this.value;
             };
 
-            document.getElementById('emoji').addEventListener('emoji-click', function(e) {
+            emoji.addEventListener('emoji-click', function(e) {
                 document.getElementById('favicon').href = "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>" + e.detail.unicode + "</text></svg>";
             });
         </script>
