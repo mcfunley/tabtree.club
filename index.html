@@ -32,9 +32,29 @@
             var emoji = document.getElementById('emoji');
             var title = document.getElementById('title');
 
-            window.addEventListener('load', function() {
-                emoji.shadowRoot.getElementById('search').placeholder = 'Choose an emoji for your tab tree here.';
-            });
+            function setFavicon(unicode) {
+                if (unicode === null) {
+                    return;
+                }
+                var f = document.getElementById('favicon');
+                f.href = "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>" + unicode + "</text></svg>";
+            }
+
+            function update() {
+                var loc = window.location;
+                var ps = new URLSearchParams({
+                    'emoji': emoji.getAttribute('chosen') || '',
+                    'title': title.value
+                });
+                console.log(ps.get('emoji'));
+                var next_url = `${loc.protocol}//${loc.host}${loc.pathname}?${ps.toString()}`;
+                history.pushState({}, document.title, next_url);
+            }
+
+            // preload
+            var qs = new URLSearchParams(window.location.search.slice(1));
+            title.value = qs.get('title');
+            setFavicon(qs.get('emoji'));
 
             if(title.value && title.value.length > 0) {
                 document.title = title.value;
@@ -42,12 +62,16 @@
                 title.focus();
             }
 
+            // events
             title.onkeyup = function() {
                 document.title = this.value;
+                update();
             };
 
             emoji.addEventListener('emoji-click', function(e) {
-                document.getElementById('favicon').href = "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>" + e.detail.unicode + "</text></svg>";
+                emoji.setAttribute('chosen', e.detail.unicode);
+                setFavicon(e.detail.unicode);
+                update();
             });
         </script>
     </body>
